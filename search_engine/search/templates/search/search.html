@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Search Engine</h1>
+        <form action="{% url 'search' %}" method="get">
+            <input type="text" name="q" placeholder="Enter a URL or keyword" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display search results -->
+        {% if query %}
+            <h2>Search Results for "{{ query }}"</h2>
+            <ul>
+                {% for result in results %}
+                    <li>
+                        <h3>{{ result.title }}</h3>
+                        <p>{{ result.content|truncatewords:50 }}</p>
+                        <a href="{{ result.url }}" target="_blank">Visit Page</a>
+                    </li>
+                {% empty %}
+                    <p>No results found.</p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
